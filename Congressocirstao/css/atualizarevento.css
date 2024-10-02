@@ -1,0 +1,35 @@
+html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
+
+.gallery img {
+      width: 100%;
+      max-width: 200px;
+      height: auto;
+      margin-bottom: 10px;
+    }
+
+
+    .form-container {
+        display: flex;
+        flex-direction: column; /* Alteração para exibir os elementos em coluna */
+        align-items: center;
+    }
+
+    .currency-input-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+
+    .currency-symbol {
+        font-size: 20px;
+        margin-right: 5px;
+        position: absolute;
+        left: 5px; /* Ajuste a posição conforme necessário */
+    }
+
+    .input-field {
+        padding: 10px; /* Aumente o padding para maior altura */
+        font-size: 16px;
+        padding-left: 30px; /* Ajuste conforme necessário para deixar espaço para o símbolo R$ */
+        height: 40px; /* Aumente a altura conforme necessário */
+    }

@@ -1,0 +1,8 @@
+html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
+
+.gallery img {
+      width: 100%;
+      max-width: 200px;
+      height: auto;
+      margin-bottom: 10px;
+    }

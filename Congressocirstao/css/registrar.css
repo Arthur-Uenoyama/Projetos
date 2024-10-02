@@ -1,0 +1,36 @@
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .w3-container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 5px;
+    }
+
+    .password-toggle {
+      position: relative;
+      display: inline-block;
+    }
+
+    .password-toggle input[type="password"] {
+      padding-right: 35px;
+    }
+
+    .password-toggle .toggle-button {
+      position: absolute;
+      top: 50%;
+      right: 5px;
+      transform: translateY(-50%);
+      cursor: pointer;
+    }
+
+    .register-button-container {
+      text-align: center;
+      margin-top: 20px;
+    }

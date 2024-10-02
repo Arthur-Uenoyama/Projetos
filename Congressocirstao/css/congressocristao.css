@@ -1,0 +1,43 @@
+body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif;}
+body, html {
+  height: 100%;
+  color: #777;
+  line-height: 1.8;
+}
+
+.w3-input {
+    /* Estilo do botão */
+    display: flex;
+    align-items: center;
+    padding: 2px 6px; /* Ajuste o padding para tornar a caixa de texto menor */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+    color: black;
+    font-size: 14px; /* Opcional: ajuste o tamanho da fonte */
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  .w3-input input {
+    /* Estilo da caixa de texto */
+    flex: 1;
+    border: none;
+    outline: none;
+    padding-left: 8px;
+    background-color: transparent; /* Torna a caixa de texto transparente */
+  }
+
+  .w3-input i {
+    /* Estilo do ícone */
+    margin-left: 8px;
+  }
+
+  .w3-input:hover {
+    background-color: #ccc;
+    color: black;
+  }
+
+  .w3-input:focus {
+    background-color: white;
+    color: black;
+  }
