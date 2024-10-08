@@ -1,22 +1,32 @@
 <?php
 include('conexao.php');
 
+$mensagem = "";
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nome_material = $_POST['nome_material'];
+    $formula_reagente = $_POST['formula_reagente'];
     $quantidade = $_POST['quantidade'];
-    $unidade_medida = $_POST['unidade_medida'];
-    $preco_unidade = $_POST['preco_unidade'];
+    $validade = $_POST['validade'];
 
-    $sql = "INSERT INTO materiais (nome_material, quantidade, unidade_medida, preco_unidade) 
-            VALUES ('$nome_material', '$quantidade', '$unidade_medida', '$preco_unidade')";
+    $sql = "INSERT INTO tblMateriais (NomeMaterial, FormulaReagente, Quantidade, Validade) 
+            VALUES (:nome_material, :formula_reagente, :quantidade, :validade)";
 
-    if ($conn->query($sql) === TRUE) {
-        echo "Novo material adicionado com sucesso!";
-    } else {
-        echo "Erro: " . $sql . "<br>" . $conn->error;
+    try {
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':nome_material', $nome_material);
+        $stmt->bindParam(':formula_reagente', $formula_reagente);
+        $stmt->bindParam(':quantidade', $quantidade);
+        $stmt->bindParam(':validade', $validade);
+
+        if ($stmt->execute()) {
+            $mensagem = "<div class='alert alert-success mt-3'>Novo material adicionado com sucesso!</div>";
+        } else {
+            $mensagem = "<div class='alert alert-danger mt-3'>Erro ao adicionar o material.</div>";
+        }
+    } catch(PDOException $e) {
+        $mensagem = "<div class='alert alert-danger mt-3'>Erro: " . $e->getMessage() . "</div>";
     }
-
-    $conn->close();
 }
 ?>
 
@@ -27,8 +37,80 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adicionar Material</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"> <!-- Font Awesome -->
+    <style>
+         .btn-primary, .btn-warning, .btn-danger {
+            background-color: #6f42c1;
+            border-color: #6f42c1;
+        }
+        .btn-primary:hover, .btn-warning:hover, .btn-danger:hover {
+            background-color: #5a3598;
+            border-color: #5a3598;
+        }
+
+        .navbar {
+            background-color: #6f42c1 !important;
+        }
+        .navbar-dark .navbar-nav .nav-link {
+            color: white;
+        }
+        .navbar-dark .navbar-nav .nav-link:hover {
+            color: #ddd;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #6f42c1;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .footer-img-left {
+            width: 50px;
+        }
+        .footer-img-right {
+            width: 90px;
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+    </style>
 </head>
 <body>
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand">Estoque Química
+            <i class="fa-solid fa-flask"></i> 
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="index.php">
+                        <i class="fa-solid fa-house"></i> Início
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php">
+                        <i class="fa-solid fa-cogs"></i> Materiais
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
     <div class="container">
         <h2 class="my-4">Adicionar Novo Material</h2>
         <form method="POST" action="">
@@ -37,20 +119,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <input type="text" class="form-control" id="nome_material" name="nome_material" required>
             </div>
             <div class="mb-3">
+                <label for="formula_reagente" class="form-label">Fórmula do Reagente</label>
+                <input type="text" class="form-control" id="formula_reagente" name="formula_reagente">
+            </div>
+            <div class="mb-3">
                 <label for="quantidade" class="form-label">Quantidade</label>
-                <input type="number" class="form-control" id="quantidade" name="quantidade" required>
+                <input type="number" step="0.01" class="form-control" id="quantidade" name="quantidade" required>
             </div>
             <div class="mb-3">
-                <label for="unidade_medida" class="form-label">Unidade de Medida</label>
-                <input type="text" class="form-control" id="unidade_medida" name="unidade_medida" required>
+                <label for="validade" class="form-label">Validade</label>
+                <input type="date" class="form-control" id="validade" name="validade">
             </div>
-            <div class="mb-3">
-                <label for="preco_unidade" class="form-label">Preço por Unidade (R$)</label>
-                <input type="number" step="0.01" class="form-control" id="preco_unidade" name="preco_unidade" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Adicionar Material</button>
+            <button type="submit" class="btn btn-primary">
+                <i class="fa-solid fa-plus-circle"></i> Adicionar Material
+            </button>
+
+            <?php echo $mensagem; ?>
         </form>
     </div>
+
+    <footer>
+        <div class="footer-container">
+            <img src="img/TiLogo.png" alt="Imagem Esquerda" class="footer-img-left">
+            <p>&copy; 2024 Estoque Química</p>
+            <img src="img/EtecLogo.png" alt="Imagem Direita" class="footer-img-right">
+        </div>
+    </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>

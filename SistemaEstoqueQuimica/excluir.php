@@ -2,16 +2,20 @@
 include('conexao.php');
 
 $id = $_GET['id'];
+$sql = "DELETE FROM tblMateriais WHERE id = :id";
 
-$sql = "DELETE FROM materiais WHERE id = $id";
-
-if ($conn->query($sql) === TRUE) {
-    echo "Material excluído com sucesso!";
-} else {
-    echo "Erro ao excluir: " . $conn->error;
+try {
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':id', $id);
+    if ($stmt->execute()) {
+        echo "Material excluído com sucesso!";
+    } else {
+        echo "Erro ao excluir o material.";
+    }
+} catch(PDOException $e) {
+    echo "Erro: " . $e->getMessage();
 }
 
-$conn->close();
 header("Location: index.php");
 exit;
 ?>

@@ -1,14 +1,14 @@
 <?php
-$servername = "localhost";  // servidor
-$username = "root";         // usuário do banco de dados
-$password = "";             // senha do banco de dados
-$dbname = "estoque_quimica"; // nome do banco de dados
+$servername = "127.0.0.1:3307";
+$username = "root";
+$password = "usbw";
+$dbname = "dbEstoqueQuimica";
 
-// Criar a conexão
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Verificar a conexão
-if ($conn->connect_error) {
-    die("Conexão falhou: " . $conn->connect_error);
+try {
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    echo "";
+} catch(PDOException $e) {
+    echo "Conexão falhou: " . $e->getMessage();
 }
 ?>
