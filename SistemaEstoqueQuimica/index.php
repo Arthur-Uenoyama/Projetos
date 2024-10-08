@@ -42,7 +42,6 @@
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Nome do Material</th>
                 <th>Fórmula do Reagente</th>
                 <th>Quantidade</th>
@@ -60,13 +59,10 @@
 
             if (count($materiais) > 0) {
                 foreach ($materiais as $row) {
-                    // Formatar a validade
                     $validade = $row['ValidadeFormatada'];
-                    // Obter quantidade como número inteiro
                     $quantidade = intval($row['Quantidade']);
                     
                     echo "<tr>";
-                    echo "<td>" . $row['id'] . "</td>";
                     echo "<td>" . $row['NomeMaterial'] . "</td>";
                     echo "<td>" . $row['FormulaReagente'] . "</td>";
                     echo "<td>" . $quantidade . "</td>";
@@ -92,7 +88,7 @@
 <footer>
     <div class="footer-container">
         <img src="img/TiLogo.png" alt="Imagem Esquerda" class="footer-img-left">
-        <p>&copy; 2024 Estoque Química</p>
+        <p>&copy; Estoque Química 2024</p>
         <img src="img/EtecLogo.png" alt="Imagem Direita" class="footer-img-right">
     </div>
 </footer>

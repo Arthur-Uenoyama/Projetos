@@ -110,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <footer>
         <div class="footer-container">
             <img src="img/TiLogo.png" alt="Imagem Esquerda" class="footer-img-left">
-            <p>&copy; 2024 Estoque Química</p>
+            <p>&copy; Estoque Química 2024</p>
             <img src="img/EtecLogo.png" alt="Imagem Direita" class="footer-img-right">
         </div>
     </footer>
