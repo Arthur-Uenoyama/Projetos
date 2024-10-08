@@ -38,52 +38,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>Adicionar Material</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"> <!-- Font Awesome -->
-    <style>
-         .btn-primary, .btn-warning, .btn-danger {
-            background-color: #6f42c1;
-            border-color: #6f42c1;
-        }
-        .btn-primary:hover, .btn-warning:hover, .btn-danger:hover {
-            background-color: #5a3598;
-            border-color: #5a3598;
-        }
-
-        .navbar {
-            background-color: #6f42c1 !important;
-        }
-        .navbar-dark .navbar-nav .nav-link {
-            color: white;
-        }
-        .navbar-dark .navbar-nav .nav-link:hover {
-            color: #ddd;
-        }
-
-        footer {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background-color: #6f42c1;
-            color: white;
-            text-align: center;
-            padding: 10px 0;
-        }
-
-        .footer-img-left {
-            width: 50px;
-        }
-        .footer-img-right {
-            width: 90px;
-        }
-
-        .footer-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
-    </style>
+    <link rel="stylesheet" href="css/EstoqueQuimica.css">
+    <link rel="icon" href="img/Icone.png" type="image/x-icon">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark">
