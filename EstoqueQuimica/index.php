@@ -1,3 +1,11 @@
+<?php
+include('conexao.php');
+$sqlTipos = "SELECT id, Descricao FROM tblTiposReagentes";
+$stmtTipos = $conn->prepare($sqlTipos);
+$stmtTipos->execute();
+$tiposReagentes = $stmtTipos->fetchAll(PDO::FETCH_ASSOC);
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -8,13 +16,22 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/EstoqueQuimica.css">
-    <link rel="icon" href="img/Icone.png" type="image/x-icon">
+    <link rel="icon" href="img/frascoicone.png" type="image/x-icon">
+    <style>
+       body {
+            background-image: url('img/wallpaperQuimica.png'); 
+            background-size: cover; 
+            background-attachment: fixed; 
+            background-position: center; 
+            color: #ffffff; 
+        }
+    </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand">Estoque Química
-            <i class="fa-solid fa-flask"></i> 
+            <i class="fa-solid fa-flask"></i>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -31,68 +48,116 @@
                         <i class="fa-solid fa-cogs"></i> Materiais
                     </a>
                 </li>
+                <li class="nav-item">
+                    <button class="btn btn-outline-light" onclick="imprimirPagina()">
+                        <i class="fa-solid fa-print"></i> Salvar PDF
+                    </button>
+                </li>
             </ul>
         </div>
     </div>
 </nav>
 
 <div class="container">
-    <h2 class="my-4">Materiais Químicos em Estoque</h2>
+    <h2 class="my-4">Materiais em Estoque</h2>
+    <form method="GET" class="mb-3">
+        <div class="input-group">
+            <select name="tipo_reagente" class="form-control">
+                <option value="">Pesquisar Tipo de Reagente</option>
+                <?php foreach ($tiposReagentes as $tipo): ?>
+                    <option value="<?php echo $tipo['id']; ?>"><?php echo $tipo['Descricao']; ?></option>
+                <?php endforeach; ?>
+            </select>
+            <select name="laboratorio" class="form-control">
+                <option value="">Pesquisar Laboratório</option>
+                <option value="1">Química</option>
+                <option value="2">Multidisciplinar</option>
+            </select>
+            <button class="btn btn-purple" style="background-color: darkviolet; color: white;" type="submit">Pesquisar <i class="bi bi-search"></i></button>
+        </div>
+    </form>
+
     <a href="adicionar.php" class="btn btn-primary mb-3">Adicionar Material</a>
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th>Nome do Material</th>
-                <th>Fórmula do Reagente</th>
-                <th>Quantidade</th>
-                <th>Validade</th>
+                <th><i class="bi bi-clipboard-fill"></i> Nome do Material</th>
+                <th><i class="fa-solid fa-atom"></i> Fórmula do Reagente</th>
+                <th><i class="fa-solid fa-tag"></i> Tipo do Reagente</th>
+                <th><i class="fa-solid fa-hashtag"></i> Quantidade</th>
+                <th><i class="bi bi-laptop-fill"></i> Laboratório</th>
+                <th><i class="bi bi-calendar-fill"></i> Validade</th>
+                <th><i class="fa-solid fa-tools"></i> Alterações</th>
             </tr>
         </thead>
         <tbody>
-            <?php
-            include('conexao.php');
-            $sql = "SELECT id, NomeMaterial, FormulaReagente, Quantidade, DATE_FORMAT(Validade, '%d/%m/%Y') AS ValidadeFormatada FROM tblMateriais";
-            $stmt = $conn->prepare($sql);
-            $stmt->execute();
+    <?php
+    $tipo_reagente = isset($_GET['tipo_reagente']) ? $_GET['tipo_reagente'] : '';
+    $laboratorio = isset($_GET['laboratorio']) ? $_GET['laboratorio'] : '';
+    
+    $sql = "SELECT m.id, m.NomeMaterial, m.FormulaReagente, t.Descricao AS TipoReagente, 
+                   m.Quantidade, m.Validade, l.Descricao AS NomeLaboratorio 
+            FROM tblMateriais m
+            JOIN tblTiposReagentes t ON m.TipoReagente = t.id
+            JOIN tblLaboratorio l ON m.Laboratorio = l.id
+            WHERE (t.id = :tipo_reagente OR :tipo_reagente = '')
+            AND (m.Laboratorio = :laboratorio OR :laboratorio = '')
+            ORDER BY m.NomeMaterial ASC";
 
-            $materiais = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $stmt = $conn->prepare($sql);
+    $stmt->bindValue(':tipo_reagente', $tipo_reagente);
+    $stmt->bindValue(':laboratorio', $laboratorio);
+    $stmt->execute();
 
-            if (count($materiais) > 0) {
-                foreach ($materiais as $row) {
-                    $validade = $row['ValidadeFormatada'];
-                    $quantidade = intval($row['Quantidade']);
-                    
-                    echo "<tr>";
-                    echo "<td>" . $row['NomeMaterial'] . "</td>";
-                    echo "<td>" . $row['FormulaReagente'] . "</td>";
-                    echo "<td>" . $quantidade . "</td>";
-                    echo "<td>" . $validade . "</td>";
-                    echo "<td>
-                        <a href='editar.php?id=" . $row['id'] . "' class='btn btn-warning btn-sm'>
-                            <i class='bi bi-clipboard-check-fill'></i> Editar
-                        </a>
-                        <a href='excluir.php?id=" . $row['id'] . "' class='btn btn-danger btn-sm'>
-                            <i class='bi bi-trash-fill'></i> Excluir
-                        </a>
-                    </td>";
-                    echo "</tr>";
-                }
-            } else {
-                echo "<tr><td colspan='6'>Nenhum material encontrado</td></tr>";
-            }
-            ?>
-        </tbody>
+    $materiais = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $data_atual = date('Y-m-d');
+
+    if (count($materiais) > 0) {
+        foreach ($materiais as $row) {
+            $validade = $row['Validade'];
+            $validade_formatada = date('d/m/Y', strtotime($validade));
+            $quantidade = intval($row['Quantidade']);
+            $classe = (strtotime($validade) < strtotime($data_atual)) ? 'table-danger' : '';
+            
+            echo "<tr class='$classe'>";
+            echo "<td>" . $row['NomeMaterial'] . "</td>";
+            echo "<td>" . $row['FormulaReagente'] . "</td>";
+            echo "<td>" . $row['TipoReagente'] . "</td>";
+            echo "<td>" . $quantidade . "</td>";  
+            echo "<td>" . $row['NomeLaboratorio'] . "</td>";
+            echo "<td>" . $validade_formatada . "</td>"; 
+            echo "<td>
+                <a href='editar.php?id=" . $row['id'] . "' class='btn btn-warning btn-sm'>
+                    <i class='bi bi-clipboard-check'></i> Editar
+                </a>
+                <a href='excluir.php?id=" . $row['id'] . "' class='btn btn-danger btn-sm'>
+                    <i class='bi bi-trash'></i> Excluir
+                </a>
+            </td>";
+            echo "</tr>";
+        }
+    } else {
+        echo "<tr><td colspan='7'>Nenhum material encontrado</td></tr>";
+    }
+    ?>
+    </tbody>
     </table>
 </div>
 
 <footer>
     <div class="footer-container">
-        <img src="img/TiLogo.png" alt="Imagem Esquerda" class="footer-img-left">
+        <img src="img/TiLogo.png" alt="Imagem Esquerda" class="footer-img-left" style="width:8%">
         <p>&copy; Estoque Química 2024</p>
-        <img src="img/EtecLogo.png" alt="Imagem Direita" class="footer-img-right">
+        <p>ETEC Coronel Raphael Brandão - Barretos/SP : Centro Paula Souza</p>
+        <img src="img/EtecLogo.png" alt="Imagem Direita" class="footer-img-right" style="width:15%">
     </div>
 </footer>
 
+<script>
+function imprimirPagina() {
+    window.print();
+}
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>

@@ -1,3 +1,11 @@
+     body {
+            background-image: url('img/wallpaper2.png'); 
+            background-size: cover; 
+            background-attachment: fixed; 
+            background-position: center; 
+            color: #ffffff; 
+        }
+     
      .btn-primary, .btn-warning, .btn-danger {
             background-color: #6f42c1;
             border-color: #6f42c1;
@@ -27,13 +35,6 @@
             padding: 10px 0;
         }
 
-        .footer-img-left {
-            width: 50px;
-        }
-        .footer-img-right {
-            width: 90px;
-        }
-
         .footer-container {
             display: flex;
             justify-content: space-between;
@@ -41,4 +42,12 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 15px;
+        }
+
+        .form-background {
+            background-color: #ffffff;
+            border-radius: 10px; 
+            padding: 20px; 
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); 
+            color: #000000; 
         }
