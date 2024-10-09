@@ -1,0 +1,24 @@
+<?php
+include('conexao.php');
+
+$id = $_GET['id'];
+
+$sql = "DELETE FROM tblUtensilios WHERE id = :id";
+
+try {
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':id', $id);
+    
+    if ($stmt->execute()) {
+        echo "Utensílio excluído com sucesso!";
+    } else {
+        echo "Erro ao excluir o utensílio.";
+    }
+} catch(PDOException $e) {
+    echo "Erro: " . $e->getMessage();
+}
+
+// Redireciona para a página de utensílios após a exclusão
+header("Location: index2.php");
+exit;
+?>
