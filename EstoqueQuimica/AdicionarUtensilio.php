@@ -109,7 +109,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
 </nav>
-
+<br>
 <div class="container form-background">
     <h2 class="my-4">Adicionar Novo Utensílio</h2>
 
@@ -148,7 +148,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     <?php endif; ?>
 </div>
-
+<br>
 <!-- Footer -->
 <footer class="w3-center w3-black w3-padding-64 w3-opacity w3-hover-opacity-off mt-auto">
   <div class="container">
