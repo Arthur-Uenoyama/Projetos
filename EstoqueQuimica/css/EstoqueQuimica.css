@@ -1,0 +1,110 @@
+  
+     .btn-primary, .btn-warning, .btn-danger {
+            background-color: #6f42c1;
+            border-color: #6f42c1;
+        }
+        .btn-primary:hover, .btn-warning:hover, .btn-danger:hover {
+            background-color: #5a3598;
+            border-color: #5a3598;
+        }
+
+        .navbar {
+            background-color: #6f42c1 !important;
+        }
+        .navbar-dark .navbar-nav .nav-link {
+            color: white;
+        }
+        .navbar-dark .navbar-nav .nav-link:hover {
+            color: #ddd;
+        }
+
+        body, h1, h2, h3, h4, h5 {font-family: "Poppins", sans-serif}
+        body {font-size:16px;}
+        .w3-half img{margin-bottom:-6px;margin-top:16px;opacity:0.8;cursor:pointer}
+        .w3-half img:hover{opacity:1}
+        
+        body { 
+            background-image: url('img/wallpaperQuimica.png'); 
+            background-size: cover; 
+            background-attachment: fixed; 
+            background-position: center; 
+            color: #ffffff; 
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; 
+        }
+        .container {
+            flex: 1; 
+        }
+        footer {
+            background-color: #6f42c1; 
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            margin-top: auto; 
+        }
+        footer .social-icons i {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background-color: #6f42c1;
+            border-color: #6f42c1;
+            border-radius: 50px; 
+        }
+        
+        .btn-primary:hover {
+            background-color: #5a31a5;
+            border-color: #5a31a5;
+            border-radius: 50px;
+        }
+        
+        .w3-sidebar {
+            background-color: #6f42c1 !important;
+        }
+        
+        .w3-bar-item {
+            color: #fff !important;
+        }
+        
+        .w3-button {
+            color: #fff !important;
+        }
+        
+        .w3-jumbo, .w3-xxxlarge, .w3-center {
+            color: #6f42c1 !important;
+        }
+        
+        .w3-text-purple {
+            color: #6f42c1 !important;
+        }
+        
+        .w3-round {
+            border-color: #6f42c1 !important;
+        }
+        
+        hr {
+            border-top: 5px solid #6f42c1;
+        }
+        .w3-light-grey {
+            background-color: #6f42c1 !important;
+            color: white !important;
+        }
+        
+        .w3-light-grey p {
+            color: white !important;
+        }
+        
+        @keyframes zoomOut {
+            0% {
+              transform: scale(1);
+            }
+            100% {
+              transform: scale(0);
+            }
+          }
+        
+          .zoom-out {
+            animation: zoomOut 0.5s forwards;
+          }
