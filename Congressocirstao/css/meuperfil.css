@@ -1,0 +1,16 @@
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+  .w3-margin-bottom {
+      margin-bottom: 20px; 
+    }
+    .profile-card {
+      margin-top: 20px; 
+    }
+    .container {
+      text-align: center;
+    }
+    .container {
+      display: flex;
+      justify-content: center; 
+      align-items: center;    
+      height: 100vh;           
+    }
