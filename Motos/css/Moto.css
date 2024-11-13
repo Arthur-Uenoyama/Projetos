@@ -1,0 +1,85 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #0A0A0A;
+}
+
+.bike-image {
+    text-align: center;
+    margin-top: 20px;
+    animation: zoomIn 2s ease-in-out;
+}
+
+.bike-image img {
+    width: 70%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes zoomIn {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.description {
+    margin-top: 20px;
+    text-align: justify;
+}
+
+.specs {
+    margin-top: 30px;
+    padding: 10px;
+    background-color: #FFF;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.specs h2 {
+    margin-bottom: 10px;
+}
+
+.specs ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.specs ul li {
+    padding: 5px 0;
+}
+
+h1,h2,h3,h4,h5,h6 {font-family: "Oswald"}
+body {font-family: "Open Sans"}
+
+.kawasaki-text {
+    color: green;
+  }
+
+.ninja-text {
+    color: gray;
+  }
+  .h-text {
+    color: red;
+  }
+  .number-text {
+    color: red;
+  }
